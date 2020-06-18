@@ -1,0 +1,11 @@
+{
+	"name": "Stripe",
+	"description": "Stripe integration (install stripe/stripe-php with composer!)",
+	"version": "0.0.1",
+	"dependencies": {
+		"Core": ">=2.8.3"
+	},
+	"js": [
+		"https://js.stripe.com/v3/"
+	]
+}
