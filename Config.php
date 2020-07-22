@@ -17,7 +17,7 @@ $config = [
 	\'success-path\' => \'payment-success\',
 	\'cancel-path\' => \'payment-cancel\',
 	\'webhook-secret\' => \'\',
-	\'handle-payment\' => function ($metaData, float $amount) {
+	\'handle-payment\' => function (array $metaData, float $amount) {
 	},
 ];
 ';

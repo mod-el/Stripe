@@ -39,7 +39,7 @@ class StripeController extends Controller
 					case 'checkout.session.completed':
 						$stripeObject = $event->data->object;
 						try {
-							$config['handle-payment']($stripeObject->client_reference_id ?? $stripeObject->metadata ?? null, $stripeObject->amount);
+							$config['handle-payment']($stripeObject->metadata ?? null, $stripeObject->amount);
 						} catch (\Exception $e) {
 							http_response_code(500);
 							echo getErr($e);

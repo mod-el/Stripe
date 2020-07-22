@@ -157,7 +157,10 @@ class Stripe extends Module
 			'currency' => 'eur',
 			'quantity' => 1,
 			'amount' => 0,
+			'metadata' => [],
 		], $options);
+
+		$options['metadata']['orderId'] = $orderId;
 
 		$options['amount'] *= 100;
 		if ((int)$options['amount'] === 0)
@@ -177,9 +180,11 @@ class Stripe extends Module
 			'line_items' => [
 				$options,
 			],
+			'payment_intent_data' => [
+				'metadata' => $options['metadata'],
+			],
 			'success_url' => BASE_HOST . PATH . $config['success-path'],
 			'cancel_url' => BASE_HOST . PATH . $config['cancel-path'],
-			'client_reference_id' => $orderId,
 		]);
 		?>
 		<script src="https://js.stripe.com/v3/" type="text/javascript"></script>
@@ -199,11 +204,12 @@ class Stripe extends Module
 	}
 
 	/**
+	 * @param string $orderId
 	 * @param float $amount
 	 * @param array $options
 	 * @return string
 	 */
-	public function getPaymentIntent(float $amount, array $options = []): string
+	public function getPaymentIntent(string $orderId, float $amount, array $options = []): string
 	{
 		$config = $this->retrieveConfig();
 
@@ -211,6 +217,7 @@ class Stripe extends Module
 
 		$options = array_merge(['currency' => 'eur'], $options);
 		$options = array_merge($options, ['amount' => $amount * 100]);
+		$options['metadata']['orderId'] = $orderId;
 
 		$intent = \Stripe\PaymentIntent::create($options);
 
