@@ -60,7 +60,7 @@ class StripeController extends Controller
 
 							$paymentIntent = \Stripe\PaymentIntent::retrieve($stripeObject->payment_intent);
 
-							$config['handle-payment']($paymentIntent->metadata->toArray(), $stripeObject->amount_total);
+							$config['handle-payment']($paymentIntent->metadata->toArray(), $stripeObject->amount_total / 100);
 						} catch (\Exception $e) {
 							http_response_code(500);
 							echo getErr($e);
