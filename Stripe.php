@@ -175,13 +175,16 @@ class Stripe extends Module
 
 		\Stripe\Stripe::setApiKey($config['secret-key']);
 
+		$metadata = $options['metadata'];
+		unset($options['metadata']);
+
 		$session = \Stripe\Checkout\Session::create([
 			'payment_method_types' => ['card'],
 			'line_items' => [
 				$options,
 			],
 			'payment_intent_data' => [
-				'metadata' => $options['metadata'],
+				'metadata' => $metadata,
 			],
 			'success_url' => BASE_HOST . PATH . $config['success-path'],
 			'cancel_url' => BASE_HOST . PATH . $config['cancel-path'],
