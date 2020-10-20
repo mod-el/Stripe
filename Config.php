@@ -33,7 +33,7 @@ $config = [
 
 		return [
 			'rules' => [
-				'stripe' => $config['path'],
+				'stripe' => $config['path'] ?? 'stripe',
 			],
 			'controllers' => [
 				'Stripe',
