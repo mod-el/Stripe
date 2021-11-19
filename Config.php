@@ -11,33 +11,13 @@ class Config extends Module_Config
 		$this->addAsset('config', 'config.php', function () {
 			return '<?php
 $config = [
-	\'path\' => \'stripe\',
 	\'publishable-key\' => \'\',
 	\'secret-key\' => \'\',
 	\'success-path\' => \'payment-success\',
 	\'cancel-path\' => \'payment-cancel\',
 	\'webhook-secret\' => \'\',
-	\'handle-payment\' => function (array $metaData, float $amount) {
-	},
 ];
 ';
 		});
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getRules(): array
-	{
-		$config = $this->retrieveConfig();
-
-		return [
-			'rules' => [
-				'stripe' => $config['path'] ?? 'stripe',
-			],
-			'controllers' => [
-				'Stripe',
-			],
-		];
 	}
 }
