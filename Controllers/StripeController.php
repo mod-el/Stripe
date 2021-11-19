@@ -25,7 +25,6 @@ class StripeController extends Controller
 
 				$payload = file_get_contents('php://input');
 				$sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
-				$event = null;
 
 				echo "Signature: " . $sig_header . "\n";
 				try {
@@ -59,17 +58,30 @@ class StripeController extends Controller
 								throw new \Exception('No payment intent found');
 
 							$paymentIntent = \Stripe\PaymentIntent::retrieve($stripeObject->payment_intent);
-
-							$config['handle-payment']($paymentIntent->metadata->toArray(), $stripeObject->amount_total / 100);
 						} catch (\Exception $e) {
 							http_response_code(500);
 							echo getErr($e);
+							break 2;
+						}
+						break;
+					case 'payment_intent.succeeded':
+						try {
+							$paymentIntent = $event->data->object;
+						} catch (\Exception $e) {
+							http_response_code(500);
+							echo getErr($e);
+							break 2;
 						}
 						break;
 					default:
 						http_response_code(400);
 						echo 'Unexpected event type';
+						break 2;
 				}
+
+				var_dump($paymentIntent);
+
+				$config['handle-payment']($paymentIntent->metadata->toArray(), $paymentIntent->amount / 100);
 				break;
 			default:
 				http_response_code(400);
