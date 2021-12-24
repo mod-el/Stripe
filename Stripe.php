@@ -227,13 +227,13 @@ class Stripe extends Module implements PaymentInterface
 
 			// Handle the event
 			switch ($event->type) {
-				case 'checkout.session.completed':
+				/*case 'checkout.session.completed':
 					$stripeObject = $event->data->object;
 					if (!$stripeObject->payment_intent)
 						throw new \Exception('No payment intent found');
 
 					$paymentIntent = \Stripe\PaymentIntent::retrieve($stripeObject->payment_intent);
-					break;
+					break;*/
 				case 'payment_intent.succeeded':
 					$paymentIntent = $event->data->object;
 					break;
