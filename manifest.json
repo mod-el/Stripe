@@ -1,10 +1,10 @@
 {
 	"name": "Stripe",
-	"description": "Stripe integration (install stripe/stripe-php with composer!)",
+	"description": "Stripe integration (install stripe/stripe-php ^10 with composer!)",
 	"version": "1.0.0",
 	"dependencies": {
-		"Core": ">=2.10.0",
-		"Payments": ">=2.0.0"
+		"Core": ">=3.0.0",
+		"Payments": ">=3.0.0"
 	},
 	"js": [
 		"https://js.stripe.com/v3/"

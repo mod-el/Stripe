@@ -41,11 +41,6 @@ class Stripe extends Module implements PaymentInterface
 				if ((int)$options['amount'] === 0)
 					$this->model->error('Nothing to pay');
 
-				if (!$options['description'])
-					unset($options['description']);
-				if (!$options['images'])
-					unset($options['images']);
-
 				$config = $this->retrieveConfig();
 
 				\Stripe\Stripe::setApiKey($config['secret-key']);
@@ -53,14 +48,30 @@ class Stripe extends Module implements PaymentInterface
 				$metadata = $options['metadata'];
 				unset($options['metadata']);
 
+				$product = [
+					'name' => $options['name'],
+				];
+				if (!$options['description'])
+					$product['description'] = $options['description'];
+				if (!$options['images'])
+					$product['images'] = $options['images'];
+
 				$session = \Stripe\Checkout\Session::create([
 					'payment_method_types' => ['card'],
 					'line_items' => [
-						$options,
+						[
+							'price_data' => [
+								'product_data' => $product,
+								'currency' => $options['currency'],
+								'unit_amount' => $options['amount'],
+							],
+							'quantity' => 1,
+						],
 					],
 					'payment_intent_data' => [
 						'metadata' => $metadata,
 					],
+					'mode' => 'payment',
 					'success_url' => BASE_HOST . PATH . $config['success-path'],
 					'cancel_url' => BASE_HOST . PATH . $config['cancel-path'],
 				]);
