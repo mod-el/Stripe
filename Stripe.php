@@ -76,7 +76,7 @@ class Stripe extends Module implements PaymentInterface
 					'cancel_url' => BASE_HOST . PATH . $config['cancel-path'],
 				]);
 				?>
-				<script src="https://js.stripe.com/v3/" type="text/javascript"></script>
+				<script src="https://js.stripe.com/v3/"></script>
 				<script>
 					window.addEventListener('load', function () {
 						let stripe = Stripe('<?=$config['publishable-key']?>');
