@@ -6,7 +6,7 @@ class Config extends Module_Config
 {
 	/**
 	 */
-	protected function assetsList()
+	protected function assetsList(): void
 	{
 		$this->addAsset('config', 'config.php', function () {
 			return '<?php
