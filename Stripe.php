@@ -51,9 +51,9 @@ class Stripe extends Module implements PaymentInterface
 				$product = [
 					'name' => $options['name'],
 				];
-				if (!$options['description'])
+				if ($options['description'])
 					$product['description'] = $options['description'];
-				if (!$options['images'])
+				if ($options['images'])
 					$product['images'] = $options['images'];
 
 				$session = \Stripe\Checkout\Session::create([
